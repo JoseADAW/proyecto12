@@ -7,7 +7,10 @@
  {
      function __construct()
      {
-         print "Bienvenido a mi tienda virtual";
+         print 'Prueba a ver si va';
+    $db = Mysqldb::getInstance()->getDatabase();
+
+
      }
  }
 
