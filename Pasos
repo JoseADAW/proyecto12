@@ -1,0 +1,35 @@
+Login   Validacion de Correo y Clave de acceso  Session iniciada
+Registro usuario nuevo  Validacion de los datos     Insertar los datos DB      Mensaje bienvenida
+Olvida la clave     Correo al usuario       Cambio de clave
+Recuerdame
+
+
+LoginController     Login
+
+index               __contruct
+olvido              insertarRegistro
+registro            cambiarClaveAcceso
+cambiaclave         validaCorreo
+verifyUser          verificar
+modelo              getUsuarioCorreo
+vista               enviarCorreo
+
+Session
+
+__contruct
+iniciarLogin
+finalizarLogin
+getLogin
+getUsuario
+
+Mysqldb
+
+Query
+queryNoSelect
+
+
+ShopController      Shop
+
+index               __construct
+modelo
+vista
