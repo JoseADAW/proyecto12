@@ -1,5 +1,4 @@
 <?php
-
 class LoginController extends Controller
 {
     private $model;
@@ -13,7 +12,7 @@ class LoginController extends Controller
     {
         $data = [
             'titulo' => 'Login',
-            'menu'   => false,
+            'menu' => false,
         ];
 
         $this->view('login', $data);
@@ -26,11 +25,15 @@ class LoginController extends Controller
 
     public function registro()
     {
-        $data = [
-            'titulo' => 'Registro',
-            'menu'   => false,
-        ];
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+            var_dump($_POST);
+        } else{
+            $data = [
+                'titulo' => 'Registro',
+                'menu' => false,
+            ];
 
-        $this->view('register', $data);
+            $this->view('register', $data);
+        }
     }
 }
