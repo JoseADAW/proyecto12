@@ -15,7 +15,7 @@
     $this->separarURL();
 
          if ( ! $this->urlController ) {
-             require_once '../app/controllers/loginController.php';
+             require_once '../app/controllers/LoginController.php';
              $page = new LoginController();
              $page->index();
          } elseif (file_exists('../app/controllers/' . ucfirst($this->urlController) . 'Controller.php')) {
