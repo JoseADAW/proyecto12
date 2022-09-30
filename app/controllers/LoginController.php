@@ -21,7 +21,46 @@ class LoginController extends Controller
 
     public function olvido()
     {
-        print 'Estoy en olvido';
+        $erros = [];
+
+        if($_SERVER['REQUEST_METHOD'] != 'POST') {
+            $data = [
+                'titulo' => 'Olvido de la contraseña',
+                'menu' => false,
+                'erros' => [],
+                'subtitle' => '¿Olvidaste la contraseña?'
+            ];
+            $this->view('olvido', $data);
+        }else{
+
+            $email = $_POST['email'] ?? '';
+
+            if ($email == '') {
+                array_push($errors, 'El email es requerido');
+            }
+
+            if (! filter_var($email, FILTER_VALIDATE_EMAIL)){
+                array_push($errors, 'El email no es valido');
+            }
+
+            if (count($erros) == 0){
+                if (! $this->model->existsEmail($email)){
+                    array_push($erros, 'El correo electronico no es correcto');
+                } else {
+                    $this->model->sendEmail($email);
+                }
+            }
+            if (count($erros)>0){
+                $data = [
+                    'titulo' => 'Olvido de la contraseña',
+                    'menu' => false,
+                    'erros' => $erros,
+                    'subtitle' => '¿Olvidaste la contraseña?'
+                ];
+
+                $this->view('olvido',$data);
+            }
+        }
     }
 
     public function registro()
