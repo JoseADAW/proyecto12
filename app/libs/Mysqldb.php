@@ -1,22 +1,21 @@
 <?php
 
 /**
- * Manejo de la base de datos de MySQL
+ * Manejo de la Base de Datos de MySQL
  */
+
 class Mysqldb
 {
-    //Datos de la conexión
+    // Datos de la conexión
     private $host = 'mysql';
     private $user = 'default';
     private $pass = 'secret';
     private $dbname = 'proyecto12';
 
-    //Atributos
+    // Atributos
     private static $instancia = null;
     private $db = null;
-    
-    
-    //Constructor
+
     private function __construct()
     {
         $options = [
@@ -26,21 +25,23 @@ class Mysqldb
 
         try {
 
-            $this ->db = new PDO(
-                 'mysql:host=' . $this->host . ';dbname' . $this->dbname,
+            $this->db = new PDO(
+                'mysql:host=' . $this->host . ';dbname=' . $this->dbname,
                 $this->user,
                 $this->pass,
                 $options
             );
 
-        }catch (PDOException $error){
-        exit('La base de datos no esta accesible');
+        } catch (PDOException $error) {
+
+            exit('La base de datos no está accesible');
+
         }
     }
 
     public static function getInstance()
     {
-        if (is_null(self::$instancia)){
+        if (is_null(self::$instancia)) {
             self::$instancia = new Mysqldb();
         }
 
@@ -51,5 +52,4 @@ class Mysqldb
     {
         return $this->db;
     }
-
 }

@@ -2,17 +2,17 @@
 
 class Controller
 {
-    public function model($model) //$model es el nombre del modelo
+    public function model($model)
     {
-      require_once '../app/models/' . $model . '.php';
-      return new $model();
+        require_once '../app/models/' . $model . '.php';
+        return new $model();
     }
 
     public function view($view, $data = [])
     {
-        if (file_exists('../app/views/' . $view . '.php')){
+        if (file_exists('../app/views/' . $view . '.php')) {
             require_once '../app/views/' . $view . '.php';
-        }else{
+        } else {
             die('La vista no existe');
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 class LoginController extends Controller
 {
     private $model;
@@ -12,7 +13,7 @@ class LoginController extends Controller
     {
         $data = [
             'titulo' => 'Login',
-            'menu' => false,
+            'menu'   => false,
         ];
 
         $this->view('login', $data);
@@ -25,10 +26,11 @@ class LoginController extends Controller
 
     public function registro()
     {
-        $errors =[];
+        $errors = [];
         $dataForm = [];
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Procesamos la información recibida del formulario
             $firstName = $_POST['first_name'] ?? '';
             $lastName1 = $_POST['last_name_1'] ?? '';
             $lastName2 = $_POST['last_name_2'] ?? '';
@@ -91,26 +93,41 @@ class LoginController extends Controller
                 array_push($errors, 'Las contraseñas deben ser iguales');
             }
 
-            if (count($errors) == 0){
-                //enviar a base de datos
-                print 'pasamos a dar de alta al usuario en la base de datos';
-            }else{
-                var_dump($errors);
+            if (count($errors) == 0) {
+
+                if ($this->model->createUser($dataForm)) {
+                    $data = [
+                        'titulo' => 'Bienvenido',
+                        'menu' => false,
+                        'erros' => [],
+                        'subtitle' => 'Bienvenido a nuestra tienda online',
+                        'text' => 'Gracias por su registro',
+                        'color' => 'alert-success',
+                        'url' => 'menu',
+                        'colorButton' => 'btn-success',
+                        'textButton' => 'Acceder'
+                    ];
+
+                    $this->view('mensaje', $data);
+                } else {
+                    print 'No se pudo insertar';
+                }
+
+            } else {
                 $data = [
                     'titulo' => 'Registro',
-                    'menu' => false,
+                    'menu'   => false,
                     'errors' => $errors,
                     'dataForm' => $dataForm
                 ];
 
                 $this->view('register', $data);
             }
-
-        } else{
-            //mostamos formulario
+        } else {
+            // Mostramos el formulario
             $data = [
                 'titulo' => 'Registro',
-                'menu' => false,
+                'menu'   => false,
             ];
 
             $this->view('register', $data);
