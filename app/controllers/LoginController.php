@@ -11,9 +11,21 @@ class LoginController extends Controller
 
     public function index()
     {
+        if (isset($_COOKIE['shoplogin'])){
+            $value = explode('|', $_COOKIE['shoplogin']);
+            $dataForm = [
+                'user' => $value[0],
+                'password' => $value[1],
+                'remember' => 'on',
+            ];
+        }else{
+            $dataForm = null;
+        }
+
         $data = [
             'titulo' => 'Login',
             'menu'   => false,
+            'data' => $dataForm,
         ];
 
         $this->view('login', $data);
@@ -305,5 +317,56 @@ class LoginController extends Controller
 
             $this->view('changepassword', $data);
         }
+    }
+
+    public function verifyUser()
+    {
+        $errors = [];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $user = $_POST['user'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $remember = isset($_POST['remember']) ? 'on' : 'off';
+
+            $errors = $this->model->verifyUser($user, $password);
+
+            $value = $user . '|' . $password;
+            if ($remember == 'on'){
+                $date = time() + (60*60*24*7);
+            }else{
+                $date = time() - 1;
+            }
+            setcookie('shoplogin', $value, $date, dirname(__DIR__ ) . ROOT);
+
+            $dataForm = [
+                'user' => $user,
+                'password' => $password,
+                'remember' => $remember,
+                ];
+
+            if ( ! $errors ) {
+                $data = $this->model->getUserByEmail($user);
+                $session = new Session();
+                $session->login($data);
+
+                header('location'. ROOT . 'shop');
+            } else {
+               $data = [
+                   'titulo' => 'Login',
+                   'menu'   => false,
+                   'erros' => $errors,
+                   'data' => $dataForm,
+               ];
+               $this->view('login', $data);
+            }
+
+        } else {
+
+            $this->index();
+
+        }
+
+
     }
 }
