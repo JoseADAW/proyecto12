@@ -21,75 +21,81 @@ class LoginController extends Controller
 
     public function olvido()
     {
-        $erros = [];
+        $errors = [];
 
-        if($_SERVER['REQUEST_METHOD'] != 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+
             $data = [
                 'titulo' => 'Olvido de la contraseña',
                 'menu' => false,
-                'erros' => [],
+                'errors' => [],
                 'subtitle' => '¿Olvidaste la contraseña?'
             ];
+
             $this->view('olvido', $data);
-        }else{
+
+        } else {
 
             $email = $_POST['email'] ?? '';
 
             if ($email == '') {
                 array_push($errors, 'El email es requerido');
             }
-
-            if (! filter_var($email, FILTER_VALIDATE_EMAIL)){
-                array_push($errors, 'El email no es valido');
+            if( ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                array_push($errors, 'El correo electrónico no es válido');
             }
 
-            if (count($erros) == 0){
-                if (! $this->model->existsEmail($email)){
-                    array_push($erros, 'El correo electronico no es correcto');
+            if (count($errors) == 0) {
+                if ( ! $this->model->existsEmail($email)) {
+                    array_push($errors, 'El correo electrónico no existe en la base de datos');
                 } else {
-                    if ( $this->model->sendEmail($email)){
+                    if ($this->model->sendEmail($email)) {
 
                         $data = [
                             'titulo' => 'Cambio de contraseña de acceso',
                             'menu' => false,
-                            'erros' => [],
-                            'subtitle' => 'cambio de contraseña de acceso',
-                            'text' => 'Se ha enviado un correo a <b>' . $email . '<b> para que pueda cambiar su clave de acceso.<br> No olvide revisar SPAM<br>Cual quier duda que tenga puede comunicarse con nosotrosos',
+                            'errors' => [],
+                            'subtitle' => 'Cambio de contraseña de acceso',
+                            'text' => 'Se ha enviado un correo a <b>' . $email . '</b> para que pueda cambiar su clave de acceso. <br>No olvide revisar su carpeta de spam. <br>Cualquier duda que tenga puede comunicarse con nosotros.',
                             'color' => 'alert-success',
                             'url' => 'login',
                             'colorButton' => 'btn-success',
-                            'textButton' => 'Regresar'
+                            'textButton' => 'Regresar',
                         ];
 
                         $this->view('mensaje', $data);
 
-                    }else{
+                    } else {
+
                         $data = [
-                            'titulo' => 'Erroe en el correo',
+                            'titulo' => 'Error con correo',
                             'menu' => false,
-                            'erros' => [],
-                            'subtitle' => 'Error al enviar el correo',
-                            'text' => 'Hubo un error al enviar el correo <br>. Intentelo mas tarde<br>',
+                            'errors' => [],
+                            'subtitle' => 'Error en el envío del correo electrónico',
+                            'text' => 'Existió un problema al enviar el correo electrónico.<br>Por favor, pruebe más tarde o comuníquese con nuestro servicio de soporte',
                             'color' => 'alert-danger',
                             'url' => 'login',
                             'colorButton' => 'btn-danger',
-                            'textButton' => 'Regresar'
+                            'textButton' => 'Regresar',
                         ];
 
                         $this->view('mensaje', $data);
+
                     }
                 }
             }
-            if (count($erros)>0){
+
+            if (count($errors) > 0) {
                 $data = [
                     'titulo' => 'Olvido de la contraseña',
                     'menu' => false,
-                    'erros' => $erros,
+                    'errors' => $errors,
                     'subtitle' => '¿Olvidaste la contraseña?'
                 ];
 
-                $this->view('olvido',$data);
+                $this->view('olvido', $data);
             }
+
         }
     }
 
@@ -165,21 +171,37 @@ class LoginController extends Controller
             if (count($errors) == 0) {
 
                 if ($this->model->createUser($dataForm)) {
+
                     $data = [
                         'titulo' => 'Bienvenido',
                         'menu' => false,
-                        'erros' => [],
-                        'subtitle' => 'Bienvenido a nuestra tienda online',
+                        'errors' => [],
+                        'subtitle' => 'Bienvenido/a a nuestra tienda online',
                         'text' => 'Gracias por su registro',
                         'color' => 'alert-success',
                         'url' => 'menu',
                         'colorButton' => 'btn-success',
-                        'textButton' => 'Acceder'
+                        'textButton' => 'Acceder',
                     ];
 
                     $this->view('mensaje', $data);
+
                 } else {
-                    print 'No se pudo insertar';
+
+                    $data = [
+                        'titulo' => 'Error',
+                        'menu' => false,
+                        'errors' => [],
+                        'subtitle' => 'Error en el proceso de registro.',
+                        'text' => 'Probablemente el correo utilizado ya exista. Pruebe con otro',
+                        'color' => 'alert-danger',
+                        'url' => 'login',
+                        'colorButton' => 'btn-danger',
+                        'textButton' => 'Regresar',
+                    ];
+
+                    $this->view('mensaje', $data);
+
                 }
 
             } else {
@@ -205,11 +227,83 @@ class LoginController extends Controller
 
     public function changePassword($id)
     {
-        $data = [
-            'titulo' => 'Cambiar Contraseña',
-            'menu'   => false,
-            'data' => $id,
-            'subtitle' => 'Cambia tu contraseña de acceso',
-        ];
+        $errors = [];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $id = $_POST['id'] ?? '';
+            $password1 = $_POST['password1'] ?? '';
+            $password2 = $_POST['password2'] ?? '';
+
+            if ($id == '') {
+                array_push($errors, 'El usuario no existe');
+            }
+            if ($password1 == '') {
+                array_push($errors, 'La contraseña es requerida');
+            }
+            if ($password2 == '') {
+                array_push($errors, 'Repetir contraseña es requerido');
+            }
+            if ($password1 != $password2) {
+                array_push($errors, 'Ambas claves deben ser iguales');
+            }
+
+            if (count($errors)) {
+
+                $data = [
+                    'titulo' => 'Cambiar contraseña',
+                    'menu'   => false,
+                    'errors' => $errors,
+                    'data' => $id,
+                    'subtitle' => 'Cambia tu contraseña de acceso',
+                ];
+
+                $this->view('changepassword', $data);
+
+            } else {
+
+                if ($this->model->changePassword($id, $password1)) {
+
+                    $data = [
+                        'titulo' => 'Cambiar contraseña',
+                        'menu'   => false,
+                        'errors' => [],
+                        'subtitle' => 'Modificación de la contraseña de acceso',
+                        'text' => 'La contraseña ha sido cambiada correctamente. Bienvenido de nuevo',
+                        'color' => 'alert-success',
+                        'url' => 'login',
+                        'colorButton' => 'btn-success',
+                        'textButton' => 'Regresar',
+                    ];
+
+                    $this->view('mensaje', $data);
+
+                } else {
+
+                    $data = [
+                        'titulo' => 'Error al cambiar contraseña',
+                        'menu'   => false,
+                        'errors' => [],
+                        'subtitle' => 'Error al modificar la contraseña de acceso',
+                        'text' => 'Existió un error al modificar la clave de acceso',
+                        'color' => 'alert-danger',
+                        'url' => 'login',
+                        'colorButton' => 'btn-danger',
+                        'textButton' => 'Regresar',
+                    ];
+
+                    $this->view('mensaje', $data);
+                }
+            }
+        } else {
+            $data = [
+                'titulo' => 'Cambiar contraseña',
+                'menu'   => false,
+                'data' => $id,
+                'subtitle' => 'Cambia tu contraseña de acceso',
+            ];
+
+            $this->view('changepassword', $data);
+        }
     }
 }

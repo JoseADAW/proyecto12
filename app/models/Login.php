@@ -56,7 +56,7 @@ class Login
 
     public function getUserByEmail($email)
     {
-        $sql = 'SLECT * FROM users WHERE email=:email';
+        $sql = 'SELECT * FROM users WHERE email=:email';
         $query = $this->db->prepare($sql);
         $query->bindParam(':email', $email, PDO::PARAM_STR);
         $query->execute();
@@ -68,20 +68,34 @@ class Login
     {
         $user = $this->getUserByEmail($email);
 
-        $fullName = $user->first_name . ' ' . $user->last_name_1 . ' ' . $user->last_name_2;
+        $fullName = $user->first_name . ' ' .
+            $user->last_name_1 . ' ' .
+            $user->last_name_2;
 
-        $msg = $fullName . ' ,accede al enlace para cambiar la contraseña. <br>';
-        $msg .= '<a href="' . ROOT . 'login/changePassword/' . $user->id . '">Enlace Cambio De Contraseña<a>';
+        $msg = $fullName . ', accede al siguiente enlace para cambiar tu contraseña. <br>';
+        $msg .= '<a href="' . ROOT . 'login/changePassword/' . $user->id . '">Cambia tu clave de acceso</a>';
 
         $headers = 'MIME-Version: 1.0\r\n';
-        $headers .= 'Content-type:text/html; charset=UTF-8\r|n';
+        $headers .= 'Content-type:text/html; charset=UTF-8\r\n';
         $headers .= 'From: tiendamvc\r\n';
-        $headers .= 'Replay to: administracion@tiendamvc.local';
+        $headers .= 'Reply-to: administracion@tiendamvc.local';
 
-        $subjet = 'Cambiar contraseña en tiendamvc';
+        $subject = "Cambiar contraseña en tiendamvc";
 
-        return mail($email, $subjet,$msg, $headers);
+        return mail($email, $subject, $msg, $headers);
+
     }
 
+    public function changePassword($id, $password)
+    {
+        $pass = hash_hmac('sha512', $password, 'elperrodesanroque');
 
+        $sql = 'UPDATE users SET password=:password WHERE id=:id';
+        $params = [
+            ':id' => $id,
+            ':password' => $pass,
+        ];
+        $query = $this->db->prepare($sql);
+        return $query->execute($params);
+    }
 }
