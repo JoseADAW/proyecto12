@@ -11,14 +11,15 @@ class LoginController extends Controller
 
     public function index()
     {
-        if (isset($_COOKIE['shoplogin'])){
+        if (isset($_COOKIE['shoplogin'])) {
+
             $value = explode('|', $_COOKIE['shoplogin']);
             $dataForm = [
                 'user' => $value[0],
                 'password' => $value[1],
                 'remember' => 'on',
             ];
-        }else{
+        } else {
             $dataForm = null;
         }
 
@@ -332,33 +333,32 @@ class LoginController extends Controller
             $errors = $this->model->verifyUser($user, $password);
 
             $value = $user . '|' . $password;
-            if ($remember == 'on'){
+            if ($remember == 'on') {
                 $date = time() + (60*60*24*7);
-            }else{
+            } else {
                 $date = time() - 1;
             }
-            setcookie('shoplogin', $value, $date, dirname(__DIR__ ) . ROOT);
+            setcookie('shoplogin', $value, $date);
 
             $dataForm = [
                 'user' => $user,
-                'password' => $password,
                 'remember' => $remember,
-                ];
+            ];
 
             if ( ! $errors ) {
                 $data = $this->model->getUserByEmail($user);
                 $session = new Session();
                 $session->login($data);
 
-                header('location'. ROOT . 'shop');
+                header("location:" . ROOT . 'shop');
             } else {
-               $data = [
-                   'titulo' => 'Login',
-                   'menu'   => false,
-                   'erros' => $errors,
-                   'data' => $dataForm,
-               ];
-               $this->view('login', $data);
+                $data = [
+                    'titulo' => 'Login',
+                    'menu'   => false,
+                    'errors' => $errors,
+                    'data' => $dataForm,
+                ];
+                $this->view('login', $data);
             }
 
         } else {

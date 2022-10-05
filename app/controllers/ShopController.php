@@ -25,4 +25,3 @@ class ShopController extends Controller
 
     }
 }
-
