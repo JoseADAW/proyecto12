@@ -11,18 +11,17 @@ class ShopController extends Controller
 
     public function index()
     {
-        $session = new  Session();
-        if ($session->getLogin()){
+        $session = new Session();
+
+        if ($session->getLogin()) {
             $data = [
-                'title' => 'Bienvenido a la tienda',
+                'titulo' => 'Bienvenid@ a nuestra tienda',
                 'menu' => false,
             ];
-
-            $this->view('shop/index',$data);
-        }else{
+            $this->view('shop/index', $data);
+        } else {
             header('location:' . ROOT);
         }
-
 
     }
 }

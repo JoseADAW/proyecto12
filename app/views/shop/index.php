@@ -1,15 +1,13 @@
-<?php include_once dirname(__DIR__) . ROOT. 'header.php'?>
-
-<div class="card p-4 bg-ligth">
+<?php include_once dirname(__DIR__) . ROOT . 'header.php'?>
+<div class="card p-4 bg-light">
     <div class="card-header">
-        <h1 class="text-center">Index shop</h1>
+        <h1 class="text-center">Estoy en index de Shop</h1>
     </div>
-    <div class="body">
+    <div class="card-body">
 
     </div>
-    <div class="footer">
+    <div class="card-footer">
 
     </div>
 </div>
-
-<?php include_once dirname(__DIR__) . ROOT .  'footer.php'?>
+<?php include_once dirname(__DIR__) . ROOT . 'footer.php'?>
