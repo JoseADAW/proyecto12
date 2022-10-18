@@ -20,7 +20,7 @@
                         <td class="text-center"><?= $user->email ?></td>
                         <td class="text-center">
                             <a href="<?= ROOT ?>adminuser/update/<?= $user->id ?>"
-                               class="btn btn-info"
+                                class="btn btn-info"
                             >Editar</a>
                         </td>
                         <td class="text-center">

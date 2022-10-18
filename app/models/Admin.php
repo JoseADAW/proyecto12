@@ -40,7 +40,7 @@ class Admin
                 ':id' => $admins[0]->id,
             ];
             if ( ! $query2->execute($params)) {
-                array_push($errors, 'Error al modificar la fecha de último acceso');
+                 array_push($errors, 'Error al modificar la fecha de último acceso');
             }
         }
         return $errors;
