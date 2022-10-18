@@ -54,4 +54,9 @@ class Validate
 
         imagejpeg($canvas, $file, 80);
     }
+
+    public static function text($string)
+    {
+        return $string;
+    }
 }
