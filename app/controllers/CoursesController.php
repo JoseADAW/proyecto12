@@ -1,6 +1,6 @@
 <?php
 
-class CourseController extends Controller
+class CoursesController extends Controller
 {
     private $model;
 
@@ -13,18 +13,20 @@ class CourseController extends Controller
     {
         $session = new Session();
 
-        if ($session->getLogin()){
+        if ($session->getLogin()) {
 
             $courses = $this->model->getCourses();
 
             $data = [
-                'titulo' => 'Cursos en linea',
-                'menu'   => true,
+                'titulo' => 'Cursos en línea',
+                'menu' => true,
+                'active' => 'courses',
                 'data' => $courses,
             ];
-            $this->view('courses/index');
 
-        }else{
+            $this->view('courses/index', $data);
+
+        } else {
             header('location:' . ROOT);
         }
     }

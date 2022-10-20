@@ -40,7 +40,7 @@ class ShopController extends Controller
         header('location:' . ROOT);
     }
 
-    public function show($id)
+    public function show($id, $back = '')
     {
         $product = $this->model->getProductById($id);
 
@@ -48,10 +48,46 @@ class ShopController extends Controller
             'titulo' => 'Detalle del producto',
             'menu' => true,
             'subtitle' => $product->name,
+            'back' => $back,
             'errors' => [],
             'data' => $product,
         ];
 
         $this->view('shop/show', $data);
+    }
+
+    public function whoami()
+    {
+        $session = new Session();
+
+        if ($session->getLogin()) {
+
+            $data = [
+                'titulo' => 'Quienes somos',
+                'menu' => true,
+                'active' => 'whoami',
+            ];
+
+            $this->view('shop/whoami', $data);
+        } else {
+            header('location:' . ROOT);
+        }
+    }
+
+    public function contact()
+    {
+        $session = new Session();
+
+        if($session->getLogin()){
+            $data = [
+                'titulo' => 'Contactanos',
+                'menu' => true,
+                'active' => 'whoami'
+            ];
+
+            $this->view('shop/contact');
+        }else{
+            header('location:' . ROOT);
+        }
     }
 }
