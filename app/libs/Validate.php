@@ -8,13 +8,13 @@ class Validate
         $replace = ['', '', '', ''];
 
         return str_replace($search, $replace, $string);
-    }
+     }
 
     public static function date($string)
     {
         $date = explode('-', $string);
 
-        if (count($date) == 1){
+        if (count($date) == 1) {
             return false;
         }
 
