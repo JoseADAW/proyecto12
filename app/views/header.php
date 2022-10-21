@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html> //copiar de git
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,9 @@
     <title><?= $data['titulo'] ?></title>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/bfde827a1d.js" crossorigin="anonymous"></script>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -40,7 +43,7 @@
                 <li class="nav-item">
                     <form action="<?= ROOT ?>search/products" class="form-inline" method="POST">
                         <input type="text" name="search" id="search" class="form-control" size="20" placeholder="¿Producto?" required>
-                        <input type="submit" class="btn btn-light" value="buscar">
+                       <button type="submit" class="btn btn-light"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </li>
                 <li class="nav-item">
