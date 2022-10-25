@@ -78,16 +78,18 @@ class CartController extends Controller
     {
         $session = new Session();
 
-        if (! $session->getLogin()) {
+        if ($session->getLogin()) {
+
             $user = $session->getUser();
 
             $data = [
-                'titulo' => 'Carrito datos de envio',
-                'subtitle' => 'Carrito verificar direccion de envio',
+                'titulo' => 'Carrito | Datos de envío',
+                'subtitle' => 'Checkout | Verificar dirección de envío',
                 'menu' => true,
                 'data' => $user,
             ];
-            $this->view('carts/address',$data);
+            $this->view('carts/address', $data);
+
         } else {
             $data = [
                 'titulo' => 'Carrito | Checkout',
@@ -97,5 +99,21 @@ class CartController extends Controller
 
             $this->view('carts/checkout', $data);
         }
+    }
+
+    public function paymentmode()
+    {
+        $data = [
+            'titulo' => 'Carrito | Forma de pago',
+            'subtitle' => 'Checkout | Forma de pago',
+            'menu' => true,
+        ];
+
+        $this->view('carts/paymentmode', $data);
+    }
+
+    public function verify()
+    {
+        var_dump($_POST);
     }
 }
