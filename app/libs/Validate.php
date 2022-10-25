@@ -8,7 +8,7 @@ class Validate
         $replace = ['', '', '', ''];
 
         return str_replace($search, $replace, $string);
-     }
+    }
 
     public static function date($string)
     {
