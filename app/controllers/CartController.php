@@ -73,4 +73,29 @@ class CartController extends Controller
 
         $this->index($errors);
     }
+
+    public function checkout()
+    {
+        $session = new Session();
+
+        if (! $session->getLogin()) {
+            $user = $session->getUser();
+
+            $data = [
+                'titulo' => 'Carrito datos de envio',
+                'subtitle' => 'Carrito verificar direccion de envio',
+                'menu' => true,
+                'data' => $user,
+            ];
+            $this->view('carts/address',$data);
+        } else {
+            $data = [
+                'titulo' => 'Carrito | Checkout',
+                'subtitle' => 'Checkout | Iniciar sesion',
+                'menu' => true
+            ];
+
+            $this->view('carts/checkout', $data);
+        }
+    }
 }
