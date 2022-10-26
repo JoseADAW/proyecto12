@@ -1,6 +1,6 @@
 <?php include_once(VIEWS . 'header.php') ?>
 <?php $verify = false; $subtotal = 0; $send = 0; $discount = 0; $user_id = $data['user_id'] ?>
-    <h2 class="text-center">Carrito de Compras</h2>
+<h2 class="text-center">Carrito de Compras</h2>
 <form action="<?= ROOT ?>cart/update" method="POST">
     <table class="table table-stripped" width="100%">
         <tr>
@@ -32,7 +32,7 @@
                 <td>&nbsp;</td>
                 <td class="text-end">
                     <a href="<?= ROOT ?>cart/delete/<?= $value->product ?>/<?= $data['user_id'] ?>"
-                       class="btn btn-danger"
+                        class="btn btn-danger"
                     >Borrar</a>
                 </td>
             </tr>
@@ -46,49 +46,49 @@
     </table>
     <hr>
     <table width="100%" class="text-end">
-    <tr>
-        <td width="79.25%"></td>
-        <td width="11.55%">Subtotal:</td>
-        <td width="9.20%"><?= number_format($subtotal, 2) ?></td>
-    </tr>
-    <tr>
-        <td width="79.25%"></td>
-        <td width="11.55%">Descuento:</td>
-        <td width="9.20%"><?= number_format($discount, 2) ?></td>
-    </tr>
-    <tr>
-        <td width="79.25%"></td>
-        <td width="11.55%">Envío:</td>
-        <td width="9.20%"><?= number_format($send, 2) ?></td>
-    </tr>
-    <tr>
-        <td width="79.25%"></td>
-        <td width="11.55%">Total:</td>
-        <td width="9.20%"><?= number_format($total, 2) ?></td>
-    </tr>
-    <tr>
-    <td>
-        <a href="<?= ROOT ?>shop" class="btn btn-info" role="button">
-            Seguir comprando
-        </a>
-    </td>
-    <td>
-        <input type="submit" class="btn btn-success" role="button" value="Recalcular">
-    </td>
-<?php if($verify): ?>
-    <td>
-        <a href="<?= ROOT ?>cart/thanks" class="btn btn-success" role="button">
-            Pagar
-        </a>
-    </td>
-    <?php else: ?>
-    <td>
-        <a href="<?= ROOT ?>cart/checkout" class="btn btn-success" role="button">
-            Pagar
-        </a>
-    </td>
-        <?php endif; ?>
-    </tr>
+        <tr>
+            <td width="79.25%"></td>
+            <td width="11.55%">Subtotal:</td>
+            <td width="9.20%"><?= number_format($subtotal, 2) ?></td>
+        </tr>
+        <tr>
+            <td width="79.25%"></td>
+            <td width="11.55%">Descuento:</td>
+            <td width="9.20%"><?= number_format($discount, 2) ?></td>
+        </tr>
+        <tr>
+            <td width="79.25%"></td>
+            <td width="11.55%">Envío:</td>
+            <td width="9.20%"><?= number_format($send, 2) ?></td>
+        </tr>
+        <tr>
+            <td width="79.25%"></td>
+            <td width="11.55%">Total:</td>
+            <td width="9.20%"><?= number_format($total, 2) ?></td>
+        </tr>
+        <tr>
+            <td>
+                <a href="<?= ROOT ?>shop" class="btn btn-info" role="button">
+                    Seguir comprando
+                </a>
+            </td>
+            <td>
+                <input type="submit" class="btn btn-success" role="button" value="Recalcular">
+            </td>
+            <?php if($verify): ?>
+            <td>
+                <a href="<?= ROOT ?>cart/thanks" class="btn btn-success" role="button">
+                    Pagar
+                </a>
+            </td>
+            <?php else: ?>
+            <td>
+                <a href="<?= ROOT ?>cart/checkout" class="btn btn-success" role="button">
+                    Pagar
+                </a>
+            </td>
+            <?php endif; ?>
+        </tr>
     </table>
-    </form>
-    <?php include_once(VIEWS . 'footer.php') ?>
+</form>
+<?php include_once(VIEWS . 'footer.php') ?>

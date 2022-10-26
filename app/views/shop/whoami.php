@@ -8,4 +8,3 @@
 </div>
 <a href="<?= ROOT ?>shop" class="btn btn-success">Regresar</a>
 <?php include_once(VIEWS . 'footer.php') ?>
-

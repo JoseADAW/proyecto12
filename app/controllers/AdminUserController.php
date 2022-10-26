@@ -179,7 +179,7 @@ class AdminUserController extends Controller
             $errors = $this->model->delete($id);
 
             if ( ! $errors ) {
-                header('location:' . ROOT . 'adminUser');
+                header('location:' . ROOT . 'adminuser');
             }
 
         }

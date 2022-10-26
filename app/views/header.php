@@ -23,7 +23,7 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a href="<?= ROOT ?>shop" class="navbar-brand">Tienda</a>
     <div class="collapse navbar-collapse" id="menu">
-        <!--        Enlaces del menú para todos-->
+<!--        Enlaces del menú para todos-->
         <?php if($data['menu']): ?>
             <div class="d-flex justify-content-start">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -44,11 +44,11 @@
             <div class="d-flex justify-content-end">
                 <ul class="nav navbar-nav navbar-right">
                     <?php if(isset($_SESSION['cartTotal']) && $_SESSION['cartTotal'] > 0): ?>
-                        <li class="nav-item">
-                            <a href="<?= ROOT ?>cart" class="nav-link">
-                                Carrito: <?= number_format($_SESSION['cartTotal'], 2) ?>&euro;
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a href="<?= ROOT ?>cart" class="nav-link">
+                            Carrito: <?= number_format($_SESSION['cartTotal'], 2) ?>&euro;
+                        </a>
+                    </li>
                     <?php endif; ?>
                     <li class="nav-item">
                         <form action="<?= ROOT ?>search/products" class="d-flex" method="POST">
