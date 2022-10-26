@@ -216,6 +216,9 @@ class AdminProductController extends Controller
             $necesites = Validate::text($_POST['necesites'] ?? '');
 
             // Validamos la información
+            if (empty($status)) {
+                array_push($errors, 'El estado del producto no esta puesto');
+            }
             if (empty($name)) {
                 array_push($errors, 'El nombre del producto es requerido');
             }
